@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><title>Arrival by Whitehaul</title>
+<meta http-equiv="refresh" content="0; url=/"/><link rel="canonical" href="/"/><style id="rr-brand-style2">.awwwards-badge,.awwwards-badge-link,.loader-logo-ic svg{display:none!important}.loader-logo-ic::after{content:"ARRIVAL";font:600 1.1rem/1 inherit;letter-spacing:.35em;color:#fff}</style><style id="rr-brand-style">
+.rr-wordmark { font-family: inherit; font-weight: 700; letter-spacing: .32em; font-size: 1.8rem; line-height: 1; color: currentColor; white-space: nowrap; }
+@media (max-width: 767px) { .rr-wordmark { font-size: 4rem; } }
+/* shop, payments and freight-partner logos do not apply to a property site */
+.home-partners, .footer-content-payment, .footer-legal-payment,
+a[href="/merchandises"], .footer-legal-item:has(a[href="/payment-policy"]),
+.footer-legal-item:has(a[href="/delivery-shipping-policy"]), .footer-legal-item:has(a[href="/refund-returns-policy"]),
+.w-commerce-commercecartwrapper, .header-cart, [data-node-type="commerce-cart-wrapper"] { display: none !important; }
+
+.about-team, .about-intro-maquee-wrap, .career-testi, .career-job, .commu-hero, .commu-charity,
+.service-tech, .contact-hero-location { display: none !important; }
+</style><style id="rr-whitehaul">.rr-wordmark{display:inline-flex;flex-direction:column;align-items:flex-start;gap:.45em}.rr-wordmark-by{font-size:.58em;font-weight:500;letter-spacing:.2em;text-transform:uppercase;opacity:.7}.loader-logo-ic::after{content:"ARRIVAL BY WHITEHAUL"!important}</style><script id="rr-home-reload">
+(function(){
+  // The homepage scene relies on scripts that only start on a full page load,
+  // so client-side transitions into "/" are turned into a real navigation.
+  function isHome(u){ try{ var p=new URL(u,location.href).pathname; return p==='/'||p==='/index.html'; }catch(e){ return false; } }
+  var here=location.pathname;
+  ['pushState','replaceState'].forEach(function(k){
+    var orig=history[k];
+    history[k]=function(s,t,u){
+      if(u!=null && isHome(u) && !isHome(here)){ location.href=new URL(u,location.href).href; return; }
+      var r=orig.apply(this,arguments); here=location.pathname; return r;
+    };
+  });
+  window.addEventListener('popstate',function(){ if(isHome(location.href) && !isHome(here)) location.reload(); here=location.pathname; });
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href]'); if(!a||a.target==='_blank') return;
+    if(isHome(a.getAttribute('href')) && !isHome(location.href)){ e.preventDefault(); e.stopImmediatePropagation(); location.href='/'; }
+  },true);
+})();
+</script></head>
+<body><p>This page is not part of the Arrival website. <a href="/">Go to the homepage</a>.</p></body></html>

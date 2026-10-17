@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Silent Hill — Private Residence for Rent</title>
+  <meta name="description" content="A quiet oak house among the pines, available to rent. 165 m², 3 rooms, up to 9 guests, 3 bathrooms — step inside and book your stay.">
+  <meta name="theme-color" content="#020202">
+  <link rel="canonical" href="https://silenthill.redpixel.club/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- link previews (Telegram, WhatsApp, Slack, Facebook, LinkedIn…) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Silent Hill">
+  <meta property="og:url" content="https://silenthill.redpixel.club/">
+  <meta property="og:title" content="Silent Hill — Private Residence for Rent">
+  <meta property="og:description" content="A quiet oak house among the pines. 165 m² · 3 rooms · up to 9 guests · 3 bathrooms. Step inside and book your stay.">
+  <meta property="og:image" content="https://silenthill.redpixel.club/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The oak-panelled living room of Silent Hill with pearl chandeliers and a window onto the pines">
+  <meta property="og:locale" content="en_GB">
+  <!-- X / Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Silent Hill — Private Residence for Rent">
+  <meta name="twitter:description" content="A quiet oak house among the pines. 165 m² · 3 rooms · up to 9 guests. Book your stay.">
+  <meta name="twitter:image" content="https://silenthill.redpixel.club/og-cover.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+<style id="rr-brand-style">
+.rr-wordmark { font-family: inherit; font-weight: 700; letter-spacing: .32em; font-size: 1.8rem; line-height: 1; color: currentColor; white-space: nowrap; }
+@media (max-width: 767px) { .rr-wordmark { font-size: 4rem; } }
+/* shop, payments and freight-partner logos do not apply to a property site */
+.home-partners, .footer-content-payment, .footer-legal-payment,
+a[href="/merchandises"], .footer-legal-item:has(a[href="/payment-policy"]),
+.footer-legal-item:has(a[href="/delivery-shipping-policy"]), .footer-legal-item:has(a[href="/refund-returns-policy"]),
+.w-commerce-commercecartwrapper, .header-cart, [data-node-type="commerce-cart-wrapper"] { display: none !important; }
+
+.about-team, .about-intro-maquee-wrap, .career-testi, .career-job, .commu-hero, .commu-charity,
+.service-tech, .contact-hero-location { display: none !important; }
+</style></head>
+<body class="is-loading">
+
+  <!-- 1. Loader -->
+  <div id="loader" aria-live="polite">
+    <div class="loader-top">
+      <span>Silent Hill</span>
+      <span class="muted">Preparing the house</span>
+    </div>
+    <div class="loader-foot">
+      <div class="loader-num"><span id="pct">0</span><span class="loader-sign">%</span></div>
+      <div class="loader-bar"><i id="bar"></i></div>
+    </div>
+  </div>
+
+  <canvas id="stage" aria-hidden="true"></canvas>
+  <div class="shade" aria-hidden="true"></div>
+
+  <!-- Glass navigation -->
+  <header class="nav">
+    <button class="brand" data-go="0">Silent Hill</button>
+    <nav class="nav-links glass">
+      <button data-go="1">Spaces</button>
+      <button data-open="plan">Floor plan</button>
+    </nav>
+    <button class="pill glass" data-open="book">Book Me</button>
+  </header>
+
+  <main id="scenes">
+    <!-- 2. Hero -->
+    <section class="scene scene-hero" data-index="0" aria-label="Silent Hill">
+      <p class="kicker" data-anim>Private residence&nbsp;&nbsp;·&nbsp;&nbsp;For rent</p>
+      <h1 class="display split">Silent Hill</h1>
+      <div class="actions">
+        <button class="pill glass lg" data-open="book" data-anim>Book Stay</button>
+        <button class="round glass" data-next data-anim aria-label="Next space">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 4v15m0 0-6-6m6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+        </button>
+      </div>
+    </section>
+    <!-- 3. Still scenes are rendered from CONFIG in app.js -->
+  </main>
+
+  <!-- Scene rail -->
+  <aside class="rail" aria-label="Spaces"></aside>
+
+  <!-- Booking -->
+  <div class="modal" id="book" role="dialog" aria-modal="true" aria-labelledby="book-title" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <form class="modal-panel glass-panel" id="book-form" novalidate>
+      <button type="button" class="close glass" data-close aria-label="Close">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="1.4"/></svg>
+      </button>
+      <p class="kicker">Silent Hill</p>
+      <h2 id="book-title" class="h-lg">Book your stay</h2>
+      <div class="fields">
+        <div class="dates wide">
+          <div class="date-sum">
+            <button type="button" class="date-chip is-active" data-edge="in"><span>Check-in</span><b id="d-in">Add date</b></button>
+            <button type="button" class="date-chip" data-edge="out"><span>Check-out</span><b id="d-out">Add date</b></button>
+          </div>
+          <div class="cal" id="cal">
+            <div class="cal-head">
+              <button type="button" class="round glass cal-nav" data-cal="-1" aria-label="Previous month">
+                <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+              </button>
+              <div class="cal-titles"></div>
+              <button type="button" class="round glass cal-nav" data-cal="1" aria-label="Next month">
+                <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+              </button>
+            </div>
+            <div class="cal-months"></div>
+            <div class="cal-foot"><span id="cal-nights">Select your arrival date</span><button type="button" class="cal-clear">Clear dates</button></div>
+          </div>
+          <input type="hidden" name="checkin"><input type="hidden" name="checkout">
+        </div>
+        <div class="field">
+          <span id="guests-label">Guests</span>
+          <div class="select" id="guests">
+            <button type="button" class="select-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="guests-label guests-value">
+              <span id="guests-value">2 guests</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+            </button>
+            <ul class="select-list" role="listbox" aria-labelledby="guests-label" tabindex="-1" hidden></ul>
+            <input type="hidden" name="guests" value="2">
+          </div>
+        </div>
+        <label><span>Name</span><input type="text" name="name" autocomplete="name"></label>
+        <label class="wide"><span>Email</span><input type="email" name="email" autocomplete="email"></label>
+        <label class="wide"><span>Message</span><textarea name="message" rows="3" placeholder="Anything we should know"></textarea></label>
+      </div>
+      <button type="submit" class="pill glass lg solid">Send request</button>
+    </form>
+  </div>
+
+  <!-- Floor plan -->
+  <div class="modal" id="plan" role="dialog" aria-modal="true" aria-labelledby="plan-title" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-panel glass-panel plan-panel">
+      <button type="button" class="close glass" data-close aria-label="Close">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="1.4"/></svg>
+      </button>
+      <p class="kicker">Silent Hill</p>
+      <h2 id="plan-title" class="h-lg">Floor plan</h2>
+      <div class="plan-body" id="plan-body"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Thank you — Silent Hill</title>
+  <meta name="description" content="Silent Hill is an educational website created at a RENDER CAMP workshop.">
+  <meta name="theme-color" content="#020202">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:image" content="https://silenthill.redpixel.club/og-cover.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="thanks-page">
+
+  <video class="bg-video" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+  <div class="shade thanks-shade" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a class="brand" href="./">Silent Hill</a>
+    <a class="pill glass" href="./">Back to the house</a>
+  </header>
+
+  <main class="thanks">
+    <div class="thanks-copy">
+      <p class="kicker" data-anim>Request received</p>
+      <h1 class="display split">Thank you.</h1>
+      <p class="thanks-lede" data-anim>
+        One small confession: Silent Hill isn’t a real rental. It’s an educational website, created as part of a
+        RENDER CAMP workshop to show what architectural visualisation and a little code can do together.
+        No request has been sent and nothing has been booked.
+      </p>
+    </div>
+
+    <div class="thanks-cards">
+      <article class="card glass-panel" data-anim>
+        <p class="kicker">RENDER CAMP</p>
+        <h2 class="h-card">Learn to create work like this</h2>
+        <p>You’re welcome to join our professional visualisation course and take your renders, films and presentations to the next level.</p>
+        <a class="pill glass solid lg" href="https://www.pvrender.camp/" target="_blank" rel="noopener">
+          Explore the course
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </a>
+      </article>
+
+      <article class="card glass-panel" data-anim>
+        <p class="kicker">RENDER CLUB</p>
+        <h2 class="h-card">Join the community</h2>
+        <p>RENDER CLUB is our free Discord community for everyone who follows our work. Share renders, ask questions and meet other artists.</p>
+        <a class="pill glass lg" href="https://discord.gg/rUgZcjdXv" target="_blank" rel="noopener">
+          Join RENDER CLUB on Discord
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </a>
+      </article>
+    </div>
+  </main>
+
+  <div class="page-veil" aria-hidden="true"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script>
+    (() => {
+      const $$ = (s) => [...document.querySelectorAll(s)];
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // background: a looping room film (small file on phones), with a poster behind it
+      const phone = matchMedia('(max-width: 860px)').matches;
+      const v = document.querySelector('.bg-video');
+      v.muted = true; v.defaultMuted = true; v.playsInline = true; v.loop = true;  // iOS wants the properties, not just the attributes
+      v.poster = phone ? 'media/scene-01-sm.jpg' : 'media/scene-01.jpg';
+      const conn = navigator.connection || {};
+      if (!conn.saveData && !/2g/.test(conn.effectiveType || '')) {
+        v.src = phone ? 'media/scene-01-sm.mp4' : 'media/scene-01.mp4';
+        v.load();
+        const tryPlay = () => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+        tryPlay();
+        v.addEventListener('canplay', tryPlay, { once: true });
+        let n = 0;
+        const retry = setInterval(() => { if (!v.paused || ++n > 8) { clearInterval(retry); return; } tryPlay(); }, 350);
+        // no prompt on screen: the first touch or click starts it if autoplay was refused
+        ['pointerdown', 'touchstart', 'keydown'].forEach((e) =>
+          document.addEventListener(e, () => { if (v.paused) tryPlay(); }, { passive: true }));
+      }
+
+      // personalise with the first name from the booking form, if we have it
+      try {
+        const n = sessionStorage.getItem('sh-name');
+        if (n) document.querySelector('h1').textContent = `Thank you, ${n}.`;
+      } catch (e) {}
+
+      // split the headline into masked letters (same treatment as the main site)
+      const esc = (ch) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[ch] || ch);
+      $$('.split').forEach((el) => {
+        el.innerHTML = el.textContent.trim().split(/\s+/)
+          .map((w) => `<span class="w">${[...w].map((ch) => `<span class="c">${esc(ch)}</span>`).join('')}</span>`)
+          .join(' ');
+      });
+
+      const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+      tl.to('.page-veil', { opacity: 0, duration: reduced ? 0.3 : 1.2, ease: 'power2.out' })
+        .fromTo('.nav', { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 1.2 }, 0.3)
+        .fromTo('.c', { yPercent: 110 }, { yPercent: 0, duration: reduced ? 0.3 : 1.25, stagger: 0.035 }, 0.35)
+        .fromTo('[data-anim]', { opacity: 0, y: 28, filter: 'blur(10px)' },
+          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, stagger: 0.12, clearProps: 'filter' }, 0.7);
+
+      // safety net: frames can be throttled (page opened in a background tab), which would
+      // leave the veil up and the words hidden — jump the timeline to its end if that happens
+      setTimeout(() => { if (tl.progress() < 1) tl.progress(1); }, 3200);
+    })();
+  </script>
+</body>
+</html>

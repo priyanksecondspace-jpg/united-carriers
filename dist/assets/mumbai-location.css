@@ -1,0 +1,12 @@
+/* Mumbai landmark scene; preserve the existing car and scroll timeline. */
+.home-service-front{isolation:isolate}
+.home-service-label{opacity:0!important;visibility:hidden!important}
+.mumbai-backdrop{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;display:flex;align-items:flex-end;background:#f5f3ef}
+.mumbai-backdrop img{display:block;width:100%;height:96%;object-fit:contain;object-position:center bottom;opacity:.76;filter:saturate(.65)}
+.home-service-truck{z-index:2}
+.mumbai-distance{font-size:clamp(36px,5vw,88px);font-weight:500;line-height:1.1;letter-spacing:-.045em;color:#d9c2a0;margin-bottom:2.4rem;white-space:nowrap}
+.mumbai-distance span{font-size:clamp(13px,1.2vw,20px);letter-spacing:.02em;color:#b8b2a9;font-weight:400}
+.mumbai-distance-note{font-size:clamp(10px,.8vw,13px);line-height:1.5;color:#aaa39a;margin-top:1.4rem}
+@media(max-width:767px){.mumbai-backdrop img{width:140%;max-width:none;margin-left:-20%;height:100%;object-fit:cover}.mumbai-distance{font-size:42px;margin-bottom:18px}.mumbai-distance span{font-size:14px}}
+
+.mumbai-distance span{margin-left:.35em}

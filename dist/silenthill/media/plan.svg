@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="110 262 1200 560" class="plan-svg" role="img" aria-label="Ground floor plan of Silent Hill">
+  <defs>
+    <pattern id="leaf" width="14" height="14" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="1" fill="rgba(255,255,255,.22)"/>
+      <circle cx="10" cy="10" r=".8" fill="rgba(255,255,255,.14)"/>
+    </pattern>
+    <pattern id="water" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(-20)">
+      <path d="M0 5h10" stroke="rgba(255,255,255,.16)" stroke-width=".8"/>
+    </pattern>
+  </defs>
+
+  <style>
+    .garden { fill: url(#leaf); stroke: none; }
+    .ground { fill: rgba(255,255,255,.035); }
+    .pool   { fill: rgba(255,255,255,.08); stroke: rgba(255,255,255,.55); stroke-width: 1.2; }
+    .wall   { fill: #fff; }
+    .thin   { fill: none; stroke: rgba(255,255,255,.55); stroke-width: 1.2; }
+    .glass  { fill: none; stroke: rgba(255,255,255,.7); stroke-width: 1; }
+    .furn   { fill: none; stroke: rgba(255,255,255,.34); stroke-width: 1; }
+    .dash   { fill: none; stroke: rgba(255,255,255,.28); stroke-width: 1; stroke-dasharray: 5 5; }
+    .tree   { fill: none; stroke: rgba(255,255,255,.2); stroke-width: 1; }
+    .label  { font: 500 10.5px Inter, system-ui, sans-serif; letter-spacing: .14em; fill: rgba(255,255,255,.62); text-anchor: middle; }
+    .meta   { font: 500 10px Inter, system-ui, sans-serif; letter-spacing: .12em; fill: rgba(255,255,255,.55); }
+    .title  { font: 400 13px 'Inter Tight', Inter, system-ui, sans-serif; letter-spacing: .16em; fill: #fff; }
+  </style>
+
+  <!-- site ground + gardens -->
+  <g class="layer-ground">
+    <rect class="ground" x="135" y="295" width="1010" height="403"/>
+    <rect class="garden" x="138" y="298" width="215" height="274"/>
+    <rect class="garden" x="138" y="578" width="110" height="117"/>
+    <rect class="garden" x="545" y="300" width="198" height="52"/>
+    <rect class="garden" x="545" y="638" width="200" height="57"/>
+    <rect class="garden" x="955" y="300" width="188" height="35"/>
+    <rect class="garden" x="955" y="570" width="140" height="125"/>
+    <rect class="pool" x="152" y="312" width="80" height="250"/>
+    <rect fill="url(#water)" x="152" y="312" width="80" height="250"/>
+    <path class="thin" d="M158 378h68M158 386h68M158 394h68M158 402h68"/>
+    <!-- street trees -->
+    <g class="tree">
+      <circle cx="1205" cy="345" r="42"/><circle cx="1238" cy="322" r="28"/><circle cx="1250" cy="380" r="30"/>
+      <circle cx="1190" cy="580" r="44"/><circle cx="1238" cy="555" r="30"/><circle cx="1242" cy="620" r="34"/>
+    </g>
+  </g>
+
+  <!-- furniture & fixtures -->
+  <g class="layer-furn">
+    <!-- dining (left) -->
+    <rect class="furn" x="443" y="410" width="30" height="120"/>
+    <g class="furn"><rect x="425" y="420" width="12" height="12"/><rect x="425" y="443" width="12" height="12"/><rect x="425" y="466" width="12" height="12"/><rect x="425" y="489" width="12" height="12"/><rect x="425" y="512" width="12" height="12"/>
+      <rect x="479" y="420" width="12" height="12"/><rect x="479" y="443" width="12" height="12"/><rect x="479" y="466" width="12" height="12"/><rect x="479" y="489" width="12" height="12"/><rect x="479" y="512" width="12" height="12"/></g>
+    <!-- living -->
+    <rect class="furn" x="572" y="378" width="108" height="30" rx="4"/>
+    <rect class="furn" x="570" y="410" width="30" height="60" rx="4"/>
+    <rect class="furn" x="622" y="425" width="45" height="38"/>
+    <circle class="furn" cx="628" cy="492" r="9"/><circle class="furn" cx="650" cy="498" r="9"/>
+    <path class="dash" d="M548 368 L740 562 M740 368 L548 562"/>
+    <!-- dining (centre) -->
+    <rect class="furn" x="596" y="585" width="102" height="22"/>
+    <g class="furn"><rect x="604" y="572" width="10" height="9"/><rect x="624" y="572" width="10" height="9"/><rect x="644" y="572" width="10" height="9"/><rect x="664" y="572" width="10" height="9"/>
+      <rect x="604" y="611" width="10" height="9"/><rect x="624" y="611" width="10" height="9"/><rect x="644" y="611" width="10" height="9"/><rect x="664" y="611" width="10" height="9"/></g>
+    <!-- study -->
+    <rect class="furn" x="256" y="620" width="30" height="60"/>
+    <circle class="furn" cx="325" cy="655" r="10"/>
+    <rect class="furn" x="382" y="660" width="68" height="28" rx="3"/>
+    <path class="furn" d="M350 610h150"/>
+    <!-- kitchen -->
+    <rect class="furn" x="788" y="582" width="152" height="22"/>
+    <rect class="furn" x="790" y="628" width="118" height="30"/>
+    <circle class="furn" cx="828" cy="592" r="4"/><circle class="furn" cx="842" cy="592" r="4"/>
+    <!-- stair -->
+    <g class="thin"><rect x="753" y="378" width="62" height="95"/>
+      <path d="M753 390h62M753 402h62M753 414h62M753 426h62M753 438h62M753 450h62M753 462h62"/></g>
+    <!-- baths -->
+    <g class="furn"><ellipse cx="505" cy="358" rx="7" ry="9"/><ellipse cx="500" cy="655" rx="7" ry="9"/><ellipse cx="913" cy="440" rx="6" ry="8"/>
+      <rect x="834" y="420" width="16" height="22"/><rect x="406" y="385" width="20" height="10"/></g>
+    <!-- garage -->
+    <path class="dash" d="M968 342h170v68h-170zM968 420h170v72h-170z"/>
+    <path class="furn" d="M968 342l170 68M1138 342l-170 68M968 420l170 72M1138 420l-170 72"/>
+  </g>
+
+  <!-- glazing & thin partitions -->
+  <g class="layer-glass">
+    <path class="glass" d="M365 398V568M527 398V568M548 360h192M548 632h192M1143 312V500M1096 568V698"/>
+    <path class="glass" d="M352 304h28M386 304h28M548 298h192M922 304h28M840 520h40M1050 520h60"/>
+    <path class="thin" d="M250 580V696M360 330v68"/>
+  </g>
+
+  <!-- walls -->
+  <g class="layer-walls">
+    <!-- envelope -->
+    <rect class="wall" x="135" y="292" width="1012" height="7"/>
+    <rect class="wall" x="135" y="694" width="1012" height="7"/>
+    <rect class="wall" x="132" y="292" width="7" height="409"/>
+    <!-- service core (top left) -->
+    <rect class="wall" x="355" y="330" width="9" height="66"/>
+    <rect class="wall" x="388" y="330" width="7" height="66"/>
+    <rect class="wall" x="388" y="353" width="96" height="7"/>
+    <rect class="wall" x="484" y="333" width="56" height="7"/>
+    <rect class="wall" x="484" y="333" width="7" height="58"/>
+    <rect class="wall" x="533" y="333" width="7" height="58"/>
+    <rect class="wall" x="364" y="390" width="176" height="6"/>
+    <!-- study / office wall -->
+    <rect class="wall" x="228" y="570" width="270" height="8"/>
+    <rect class="wall" x="520" y="570" width="12" height="62"/>
+    <rect class="wall" x="455" y="626" width="7" height="70"/>
+    <rect class="wall" x="480" y="626" width="60" height="7"/>
+    <!-- living room piers -->
+    <rect class="wall" x="533" y="560" width="9" height="72"/>
+    <rect class="wall" x="742" y="365" width="8" height="120"/>
+    <rect class="wall" x="742" y="570" width="8" height="66"/>
+    <!-- stair / baths block -->
+    <rect class="wall" x="742" y="350" width="80" height="8"/>
+    <rect class="wall" x="820" y="335" width="8" height="136"/>
+    <rect class="wall" x="820" y="335" width="60" height="7"/>
+    <rect class="wall" x="878" y="335" width="8" height="136"/>
+    <rect class="wall" x="878" y="335" width="72" height="7"/>
+    <rect class="wall" x="943" y="335" width="7" height="136"/>
+    <rect class="wall" x="878" y="464" width="72" height="7"/>
+    <rect class="wall" x="878" y="404" width="30" height="6"/>
+    <!-- garage wall -->
+    <rect class="wall" x="820" y="503" width="292" height="8"/>
+    <!-- kitchen -->
+    <rect class="wall" x="786" y="570" width="164" height="8"/>
+    <rect class="wall" x="943" y="570" width="7" height="126"/>
+  </g>
+
+  <!-- labels -->
+  <g class="layer-labels">
+    <text class="label" x="192" y="582">POOL</text>
+    <text class="label" x="446" y="552">DINING</text>
+    <text class="label" x="644" y="530">LIVING</text>
+    <text class="label" x="644" y="652">DINING</text>
+    <text class="label" x="340" y="598">STUDY</text>
+    <text class="label" x="868" y="682">KITCHEN</text>
+    <text class="label" x="784" y="492">STAIRS</text>
+    <text class="label" x="914" y="492">BATH</text>
+    <text class="label" x="512" y="382">WC</text>
+    <text class="label" x="1053" y="530">GARAGE</text>
+    <text class="label" x="1025" y="640">GARDEN</text>
+    <text class="label" x="290" y="330">GARDEN</text>
+  </g>
+
+  <!-- scale, north, title -->
+  <g class="layer-meta">
+    <path d="M1010 752l8 14 8-14z" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1"/>
+    <text class="meta" x="1013" y="782">N</text>
+    <path d="M1045 766h200M1045 760v12M1078 760v12M1145 760v12M1245 760v12" stroke="rgba(255,255,255,.6)" stroke-width="1" fill="none"/>
+    <path d="M1045 766h33" stroke="#fff" stroke-width="3"/>
+    <path d="M1145 766h100" stroke="#fff" stroke-width="3"/>
+    <text class="meta" x="1042" y="752">0</text><text class="meta" x="1075" y="752">1</text>
+    <text class="meta" x="1142" y="752">3</text><text class="meta" x="1238" y="752">6 M</text>
+    <text class="title" x="135" y="770">GROUND FLOOR</text>
+  </g>
+</svg>
