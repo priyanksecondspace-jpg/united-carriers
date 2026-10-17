@@ -2462,11 +2462,14 @@ window.rrSideView = function(){
 })();
 </script><script id="rr-site">
 (function(){
-  var IW=2000, IH=1116;            // aerial image size
-  var EX=0.5035, EY=0.402, EDGE=0.419;   // EDGE = front line of the building (car disappears past it)         // drop-off entry point (fraction of image)
-  var ZOOM_IN=4.4;                 // close-up while the car pulls in
+  var IW=2000, IH=1116;                          // aerial image size
+  var EX=0.5035, KERB=0.371, DROP=0.402, EDGE=0.419; // street kerb, drop-off point, building front line (fractions of image)
+  var ZOOM_IN=2.2;                               // close-up at the start; the aerial is only 2000px wide, more goes blurry
+  var CAR_FRAC=0.011;                            // car length as a fraction of the photo width (matches cars in the photo)
+  var T=null;                                    // road car's pinned centre, latched so progress depends on scroll only
   function clamp(v,a,b){return v<a?a:v>b?b:v;}
   function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+  function lerp(a,b,t){return a+(b-a)*t;}
   function tick(){
     var site=document.querySelector('.rr-site'), wrap=document.querySelector('.home-service-wrap');
     if(site&&wrap){
@@ -2475,31 +2478,31 @@ window.rrSideView = function(){
       var W=site.clientWidth, H=site.clientHeight, sr=site.getBoundingClientRect();
       if(W&&H&&tcImg){
         var edge=wrap.getBoundingClientRect().bottom, tr=tcImg.getBoundingClientRect(), tcy=tr.top+tr.height/2;
-        // 0..1 over the reveal plus one more screen of scrolling
+        // the road car scrolls away once its sticky wrap ends; keep using its pinned position after that
+        if(T===null||edge>=tcy) T=tcy; tcy=T;
+        // 0..1 from the reveal edge passing the road car until 1.2 screens later; stays at 1 afterwards
         var p=clamp((tcy-edge)/(tcy+innerHeight*1.2),0,1), pre=edge>=tcy;
-        var pDrive=pre?0:clamp(p/0.55,0,1), pUnder=clamp((p-0.5)/0.15,0,1), pZoom=ease(clamp((p-0.62)/0.38,0,1));
-        var cover=Math.max(W/IW,H/IH), CAR_FRAC=0.011;   // car length as a fraction of the photo width (matches cars in the photo)
-        var s0=Math.max(cover*ZOOM_IN, tr.height/(CAR_FRAC*IW)), s=s0+(cover-s0)*pZoom;
-        // keep the entry point on screen while zooming out to the full view
-        var fx=W/2, rel=edge-sr.top, fy=Math.max(H*0.42, Math.min(H*1.15, rel+H*0.10));
-        var ox=fx-EX*IW*s, oy=fy-EY*IH*s;
-        var fullOx=(W-IW*cover)/2, fullOy=(H-IH*cover)/2;
-        ox=ox+(fullOx-(fx-EX*IW*cover))*pZoom*0+0; // anchor-based zoom
-        ox=Math.min(0,Math.max(W-IW*s,ox)); if(pZoom>0){ oy=oy+(Math.min(0,Math.max(H-IH*s,oy))-oy)*pZoom; }
-        img.style.width=IW+'px'; img.style.transform='translate('+ox+'px,'+oy+'px) scale('+s+')';
-        var ex=ox+EX*IW*s, ey=oy+EY*IH*s;
-        var len1=tr.height, len0=tr.height;
+        var pDrive=pre?0:clamp(p/0.45,0,1);              // road -> kerb -> drop-off -> under the building
+        var pZoom=ease(clamp((p-0.3)/0.7,0,1));          // zoom out as the car pulls into the building
+        var cover=Math.max(W/IW,H/IH), s0=cover*ZOOM_IN, s=lerp(s0,cover,pZoom);
         var x0=tr.left+tr.width/2-sr.left, y0=tcy-sr.top;
-        var START=0.371;  // near kerb of the street in front of the building (car appears here)
-        var sx=ox+EX*IW*s, sy=oy+START*IH*s;
-        var len,x,y; if(pDrive<0.35){ var t=ease(pDrive/0.35); len=len0+(len1-len0)*t; x=x0+(sx-x0)*t; y=y0+(sy-y0)*t; }
-        else { var t2=(pDrive-0.35)/0.65; len=len1; x=sx+(ex-sx)*t2; y=sy+(ey-sy)*t2; }
-        y+=len1*1.4*pUnder;
+        // drop-off anchor: close-up puts the kerb just below the road car, full view shows the whole photo
+        var ax0=W/2, ay0=Math.min(H*0.9, y0+tr.height*0.6+(DROP-KERB)*IH*s0);
+        var ax1=(W-IW*cover)/2+EX*IW*cover, ay1=(H-IH*cover)/2+DROP*IH*cover;
+        var ox=lerp(ax0,ax1,pZoom)-EX*IW*s, oy=lerp(ay0,ay1,pZoom)-DROP*IH*s;
+        ox=clamp(ox,W-IW*s,0); oy=clamp(oy,H-IH*s,0);
+        img.style.width=IW+'px'; img.style.transform='translate('+ox+'px,'+oy+'px) scale('+s+')';
+        function at(fy){ return oy+fy*IH*s; }
+        var cx=ox+EX*IW*s, photoLen=CAR_FRAC*IW*s, len, x, y;
+        if(pDrive<0.3){ var t=ease(pDrive/0.3); len=lerp(tr.height,photoLen,t); x=lerp(x0,cx,t); y=lerp(y0,at(KERB),t); }
+        else if(pDrive<0.65){ var t2=ease((pDrive-0.3)/0.35); len=photoLen; x=cx; y=lerp(at(KERB),at(DROP),t2); }
+        else { var t3=ease((pDrive-0.65)/0.35); len=photoLen; x=cx; y=lerp(at(DROP),at(EDGE)+photoLen,t3); }
         var cw=len*809/2880;
         car.style.width=len+'px';
         car.style.transform='translate('+(x-len/2)+'px,'+(y-cw/2)+'px) rotate(90deg)';
         car.style.opacity='1';
-        var clipY=oy+EDGE*IH*s; var cc=site.querySelector('.rr-site-carclip'); if(cc) cc.style.clipPath='inset(0 0 '+Math.max(0,H-clipY)+'px 0)';
+        // the car disappears under the building past its front line
+        var clipY=at(EDGE); var cc=site.querySelector('.rr-site-carclip'); if(cc) cc.style.clipPath='inset(0 0 '+Math.max(0,H-clipY)+'px 0)';
         // the aerial car shows through below the reveal edge while the road car is still visible above it
         car.style.visibility=edge<tr.bottom?'visible':'hidden';
         if(tw) tw.style.visibility=edge<tr.top?'hidden':'';
