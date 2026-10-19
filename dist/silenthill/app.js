@@ -1,35 +1,250 @@
 import { Stage } from './stage.js';
+import { initVisualSearch } from './visual-search.js';
 
 /* ============================================================
    CONTENT — edit here. Every room is a looping animation; scenes change with a soft crossfade.
    ============================================================ */
 const CONFIG = {
   maxGuests: 9,
-  floorPlan: 'media/plan.svg',          // redrawn ground-floor plan
-  specs: { area: 165, rooms: 3, guests: 9, baths: 3 }, // whole apartment; a scene can override with its own specs
+  floorPlans: [{"label": "Residence 66 \u00b7 61.6 m\u00b2 \u00b7 2 rooms", "src": "media/arrival/plan-66.svg", "source": "https://gatiworks.vercel.app/flat/66"}, {"label": "Residence 86 \u00b7 61.6 m\u00b2 \u00b7 2 rooms", "src": "media/arrival/plan-86.svg", "source": "https://gatiworks.vercel.app/flat/86"}, {"label": "Residence 87 \u00b7 62.1 m\u00b2 \u00b7 2 rooms", "src": "media/arrival/plan-87.svg", "source": "https://gatiworks.vercel.app/flat/87"}, {"label": "Residence 97 \u00b7 62.1 m\u00b2 \u00b7 2 rooms", "src": "media/arrival/plan-97.svg", "source": "https://gatiworks.vercel.app/flat/97"}, {"label": "Residence 136 \u00b7 61.6 m\u00b2 \u00b7 2 rooms", "src": "media/arrival/plan-136.svg", "source": "https://gatiworks.vercel.app/flat/136"}, {"label": "Residence 54 \u00b7 67 m\u00b2 \u00b7 2 rooms", "src": "media/arrival/plan-54.svg", "source": "https://gatiworks.vercel.app/flat/54"}, {"label": "Residence 137 \u00b7 62.1 m\u00b2 \u00b7 2 rooms", "src": "media/arrival/plan-137.svg", "source": "https://gatiworks.vercel.app/flat/137"}, {"label": "Residence 162 \u00b7 67.7 m\u00b2 \u00b7 2 rooms", "src": "media/arrival/plan-162.svg", "source": "https://gatiworks.vercel.app/flat/162"}, {"label": "Residence 164 \u00b7 66.8 m\u00b2 \u00b7 2 rooms", "src": "media/arrival/plan-164.svg", "source": "https://gatiworks.vercel.app/flat/164"}, {"label": "Residence 85 \u00b7 120 m\u00b2 \u00b7 3 rooms", "src": "media/arrival/plan-85.svg", "source": "https://gatiworks.vercel.app/flat/85"}, {"label": "Residence 95 \u00b7 120 m\u00b2 \u00b7 3 rooms", "src": "media/arrival/plan-95.svg", "source": "https://gatiworks.vercel.app/flat/95"}, {"label": "Residence 192 \u00b7 67.7 m\u00b2 \u00b7 2 rooms", "src": "media/arrival/plan-192.svg", "source": "https://gatiworks.vercel.app/flat/192"}],
+  specs: { area: "—", rooms: "—", guests: "—", baths: "—" },
   scenes: [
-    {
-      id: 'hero', kind: 'video', label: 'Silent Hill',
-      src: { lg: 'media/hero.mp4', sm: 'media/hero-sm.mp4' },
-      poster: { lg: 'media/hero-poster.jpg', sm: 'media/hero-poster-sm.jpg' },
+  {
+    "id": "arrival-03",
+    "kind": "video",
+    "label": "Twin Towers",
+    "src": {
+      "lg": "media/arrival/03.mp4",
+      "sm": "media/arrival/03-sm.mp4"
     },
-    // room(n, label, lede, focus?) → media/scene-NN.mp4 (+ -sm.mp4), ping-pong looped
-    room(1, 'Living Room', 'An oak-lined hall under a vaulted ceiling, opening onto the pines through one tall window.', [0.5, 0.45]),
-    room(2, 'Reading Corner', 'Paper-cord armchairs on a woven rug, a quiet place by the window.'),
-    room(3, 'The Chair', 'Bent oak and leather, under a lit niche in the panelled wall.'),
-    room(4, 'The Niche', 'Warm light pooling in the oak panelling, framed and waiting.'),
-    room(5, 'Details', 'A blackened side table against soft bouclé — textures chosen to be touched.'),
-    room(6, 'The Sofa', 'A deep curved sofa in bouclé, facing the trees.'),
-    room(7, 'The Daybed', 'Burgundy velvet on a solid oak base, made for long afternoons.'),
-  ],
+    "poster": {
+      "lg": "media/arrival/03.jpg",
+      "sm": "media/arrival/03.jpg"
+    }
+  },
+  {
+    "id": "arrival-02",
+    "kind": "video",
+    "label": "Tower at Dusk",
+    "src": {
+      "lg": "media/arrival/02.mp4",
+      "sm": "media/arrival/02-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/02.jpg",
+      "sm": "media/arrival/02.jpg"
+    }
+  },
+  {
+    "id": "arrival-04",
+    "kind": "video",
+    "label": "Garden Approach",
+    "src": {
+      "lg": "media/arrival/04.mp4",
+      "sm": "media/arrival/04-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/04.jpg",
+      "sm": "media/arrival/04.jpg"
+    }
+  },
+  {
+    "id": "arrival-05",
+    "kind": "video",
+    "label": "The Arrival Court",
+    "src": {
+      "lg": "media/arrival/05.mp4",
+      "sm": "media/arrival/05-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/05.jpg",
+      "sm": "media/arrival/05.jpg"
+    }
+  },
+  {
+    "id": "arrival-06",
+    "kind": "video",
+    "label": "Above the City",
+    "src": {
+      "lg": "media/arrival/06.mp4",
+      "sm": "media/arrival/06-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/06.jpg",
+      "sm": "media/arrival/06.jpg"
+    }
+  },
+  {
+    "id": "arrival-07",
+    "kind": "video",
+    "label": "Entrance",
+    "src": {
+      "lg": "media/arrival/07.mp4",
+      "sm": "media/arrival/07-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/07.jpg",
+      "sm": "media/arrival/07.jpg"
+    }
+  },
+  {
+    "id": "arrival-08",
+    "kind": "video",
+    "label": "Reception",
+    "src": {
+      "lg": "media/arrival/08.mp4",
+      "sm": "media/arrival/08-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/08.jpg",
+      "sm": "media/arrival/08.jpg"
+    }
+  },
+  {
+    "id": "arrival-09",
+    "kind": "video",
+    "label": "Lounge Area",
+    "src": {
+      "lg": "media/arrival/09.mp4",
+      "sm": "media/arrival/09-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/09.jpg",
+      "sm": "media/arrival/09.jpg"
+    }
+  },
+  {
+    "id": "arrival-10",
+    "kind": "video",
+    "label": "Common Dining",
+    "src": {
+      "lg": "media/arrival/10.mp4",
+      "sm": "media/arrival/10-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/10.jpg",
+      "sm": "media/arrival/10.jpg"
+    }
+  },
+  {
+    "id": "arrival-11",
+    "kind": "video",
+    "label": "Yoga Centre",
+    "src": {
+      "lg": "media/arrival/11.mp4",
+      "sm": "media/arrival/11-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/11.jpg",
+      "sm": "media/arrival/11.jpg"
+    }
+  },
+  {
+    "id": "arrival-12",
+    "kind": "video",
+    "label": "Gym",
+    "src": {
+      "lg": "media/arrival/12.mp4",
+      "sm": "media/arrival/12-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/12.jpg",
+      "sm": "media/arrival/12.jpg"
+    }
+  },
+  {
+    "id": "arrival-14",
+    "kind": "video",
+    "label": "Meeting Hall",
+    "src": {
+      "lg": "media/arrival/14.mp4",
+      "sm": "media/arrival/14-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/14.jpg",
+      "sm": "media/arrival/14.jpg"
+    }
+  },
+  {
+    "id": "arrival-15",
+    "kind": "video",
+    "label": "Swimming Pool",
+    "src": {
+      "lg": "media/arrival/15.mp4",
+      "sm": "media/arrival/15-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/15.jpg",
+      "sm": "media/arrival/15.jpg"
+    }
+  },
+  {
+    "id": "arrival-16",
+    "kind": "video",
+    "label": "Living Room",
+    "src": {
+      "lg": "media/arrival/16.mp4",
+      "sm": "media/arrival/16-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/16.jpg",
+      "sm": "media/arrival/16.jpg"
+    }
+  },
+  {
+    "id": "arrival-17",
+    "kind": "video",
+    "label": "Kitchen",
+    "src": {
+      "lg": "media/arrival/17.mp4",
+      "sm": "media/arrival/17-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/17.jpg",
+      "sm": "media/arrival/17.jpg"
+    }
+  },
+  {
+    "id": "arrival-18",
+    "kind": "video",
+    "label": "Family Lounge",
+    "src": {
+      "lg": "media/arrival/18.mp4",
+      "sm": "media/arrival/18-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/18.jpg",
+      "sm": "media/arrival/18.jpg"
+    }
+  },
+  {
+    "id": "arrival-19",
+    "kind": "video",
+    "label": "The Sofa",
+    "src": {
+      "lg": "media/arrival/19.mp4",
+      "sm": "media/arrival/19-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/19.jpg",
+      "sm": "media/arrival/19.jpg"
+    }
+  },
+  {
+    "id": "arrival-20",
+    "kind": "video",
+    "label": "Bedroom",
+    "src": {
+      "lg": "media/arrival/20.mp4",
+      "sm": "media/arrival/20-sm.mp4"
+    },
+    "poster": {
+      "lg": "media/arrival/20.jpg",
+      "sm": "media/arrival/20.jpg"
+    }
+  }
+]
 };
-
-function room(n, label, lede, focus = [0.5, 0.5]) {
-  const nn = String(n).padStart(2, '0');
-  return { id: `scene-${nn}`, kind: 'video', label, lede, focus,
-    src: { lg: `media/scene-${nn}.mp4`, sm: `media/scene-${nn}-sm.mp4` },
-    poster: { lg: `media/scene-${nn}.jpg`, sm: `media/scene-${nn}-sm.jpg` } };
-}
 
 /* ============================================================ */
 const params = new URLSearchParams(location.search);
@@ -78,8 +293,8 @@ dock.innerHTML = `
     <div class="spec"><b data-spec="baths">${CONFIG.specs.baths}</b><span>Bathrooms</span></div>
   </div>
   <div class="info-actions">
-    <button class="pill glass" data-open="plan">Floor plan</button>
-    <button class="pill glass solid" data-open="book">Book Me</button>
+    <button class="pill glass" data-visual>Visual Search</button>
+    <button class="pill glass solid" data-open="book">Book a Visit</button>
     <span class="spacer"></span>
     <button class="round glass dock-next" data-next aria-label="Next space">${arrowSvg}</button>
   </div>`;
@@ -244,7 +459,7 @@ function loadFilm(sc) {
     if (v.readyState >= 2) finish(true);
     // a muted play() nudges iOS into actually fetching the file
     const pr = v.play();
-    if (pr && pr.then) pr.then(() => { if (scenes[current] !== sc) v.pause(); }).catch(() => {});
+    if (pr && pr.then) pr.then(() => { if (scenes[current] !== sc || document.hidden || document.body.classList.contains('visual-mode')) v.pause(); }).catch(() => {});
   });
   return sc.film;
 }
@@ -262,6 +477,7 @@ function swapIn(sc) {
 }
 
 function playFilm(sc) {
+  if (document.hidden || document.body.classList.contains("visual-mode")) return;
   const v = sc.video;
   if (!v) return;
   const tryPlay = () => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
@@ -269,7 +485,7 @@ function playFilm(sc) {
   // browsers occasionally refuse the first muted play(); retry quietly for a moment
   let n = 0;
   const retry = setInterval(() => {
-    if (scenes[current] !== sc || !v.paused || ++n > 8) { clearInterval(retry); return; }
+    if (scenes[current] !== sc || document.hidden || document.body.classList.contains('visual-mode') || !v.paused || ++n > 8) { clearInterval(retry); return; }
     tryPlay();
   }, 350);
 }
@@ -279,7 +495,7 @@ function playFilm(sc) {
 (function resumeOnFirstGesture() {
   const resume = () => {
     const v = scenes[current] && scenes[current].video;
-    if (v && v.paused) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+    if (v && v.paused && !document.hidden && !document.body.classList.contains("visual-mode")) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
   };
   ['pointerdown', 'touchstart', 'keydown', 'visibilitychange'].forEach((e) =>
     document.addEventListener(e, resume, { passive: true }));
@@ -292,7 +508,7 @@ async function loadRest() {
     try { await loadPoster(sc); } catch (e) { console.warn(e); }
   }
   if (STILLS_ONLY) return;
-  const films = small ? scenes.slice(1, 3) : scenes.slice(1);
+  const films = scenes.slice(1, 3);
   for (const sc of films) {
     try { await loadFilm(sc); } catch (e) { console.warn(e); }
   }
@@ -409,6 +625,9 @@ function showScene(i) {
     { opacity: 0, y: 28, filter: 'blur(10px)' },
     { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, ease: 'expo.out', stagger: 0.09, delay: 0.25, clearProps: 'filter' });
   $$('.rail button').forEach((b) => b.classList.toggle('is-active', +b.dataset.go === i));
+  // keep the active marker in view when the rail is taller than its box
+  const railEl = $('.rail'), activeBtn = $('.rail button.is-active');
+  if (railEl && activeBtn) railEl.scrollTo({ top: activeBtn.offsetTop - (railEl.clientHeight - activeBtn.offsetHeight) / 2 });
 }
 
 function hideScene(i, dir) {
@@ -470,6 +689,12 @@ async function go(i) {
   startKenBurns();
   busy = false;
   lockUntil = performance.now() + 650; // swallow trackpad inertia
+  // Keep only the current film and its neighbours decoded in memory.
+  scenes.forEach((sc, index) => {
+    if (Math.abs(index - i) <= 1 || !sc.video) return;
+    sc.video.pause(); sc.video.removeAttribute('src'); sc.video.load();
+    sc.video = null; sc.film = null; sc.media = sc.img;
+  });
   const nx = scenes[i + 1];
   if (nx) loadPoster(nx).then(() => loadFilm(nx)).catch(() => {});
 }
@@ -478,7 +703,7 @@ async function go(i) {
    INPUT
    ============================================================ */
 const modalOpen = () => $$('.modal').some((m) => !m.hidden);
-const canNav = () => !busy && !modalOpen() && performance.now() > lockUntil;
+const canNav = () => !document.body.classList.contains('visual-mode') && !busy && !modalOpen() && performance.now() > lockUntil;
 
 let acc = 0, accTimer;
 window.addEventListener('wheel', (e) => {
@@ -521,20 +746,22 @@ document.addEventListener('click', (e) => {
    ============================================================ */
 let lastFocus = null;
 
-// floor plan: inline the SVG (so it takes the site's type + colours) and draw it in layer by layer
-let planSvg = null;
-async function showPlan() {
+// Reference plans are local image assets; keep their original labels and dimensions.
+function showPlan() {
   const body = $('#plan-body');
-  if (!CONFIG.floorPlan) { body.innerHTML = '<div class="plan-empty">Floor plan coming soon</div>'; return; }
-  if (!planSvg) planSvg = await fetch(CONFIG.floorPlan).then((r) => r.text()).catch(() => '');
-  body.innerHTML = planSvg;
-  const svg = $('svg', body);
-  if (!svg || reduced) return;
-  gsap.timeline({ delay: 0.25 })
-    .from($$('.layer-ground > *', svg), { opacity: 0, duration: 0.8, stagger: 0.03, ease: 'power2.out' })
-    .from($$('.layer-walls rect', svg), { opacity: 0, scale: 0.6, transformOrigin: '50% 50%', duration: 0.7, stagger: 0.018, ease: 'expo.out' }, 0.1)
-    .from($$('.layer-glass, .layer-furn', svg), { opacity: 0, duration: 0.9, ease: 'power2.out' }, 0.5)
-    .from($$('.layer-labels text, .layer-meta', svg), { opacity: 0, y: 6, duration: 0.7, stagger: 0.03, ease: 'expo.out' }, 0.8);
+  if (body.children.length) return;
+  const label = document.createElement('label');
+  label.textContent = 'Choose a residence';
+  const select = document.createElement('select');
+  select.className = 'plan-select';
+  const img = document.createElement('img');
+  img.className = 'residence-plan';
+  const link = document.createElement('a');
+  link.textContent = 'View residence details ↗'; link.target = '_blank'; link.rel = 'noopener';
+  const update = () => { const plan = CONFIG.floorPlans[select.selectedIndex]; img.src = plan.src; img.alt = plan.label + ' floor plan'; link.href = plan.source; };
+  CONFIG.floorPlans.forEach((p, i) => select.add(new Option(p.label, i)));
+  select.addEventListener('change', update);
+  label.append(select); body.append(label, img, link); update();
 }
 
 function openModal(id) {
@@ -663,4 +890,30 @@ boot().catch((e) => {
   console.error('boot failed', e);
   const t = document.querySelector('.loader-top .muted');
   if (t) t.textContent = 'Could not load — please refresh';
+});
+
+initVisualSearch({ openModal, closeModal }).catch(error => { console.error(error); const button = document.querySelector('[data-visual]'); button.textContent = 'Visual Search unavailable'; button.disabled = true; });
+
+let tourInView = true;
+function syncTourActivity() {
+  const active = tourInView && !document.hidden && !document.body.classList.contains('visual-mode');
+  stage?.setActive(active);
+  scenes.forEach(sc => { if (sc.video && (!active || sc !== scenes[current])) sc.video.pause(); });
+  if (active) playFilm(scenes[current]);
+}
+document.addEventListener('visibilitychange', syncTourActivity);
+document.addEventListener('arrival-view-change', syncTourActivity);
+// The parent page's header links ask the tour to open Spaces or Visual Search.
+window.addEventListener('message', event => {
+  if (event.origin !== location.origin || event.source !== parent || event.data?.type !== 'arrival-open') return;
+  const open = () => {
+    if (event.data.view === 'visual') $('[data-visual]').click(); else $('[data-go="1"]').click();
+    parent.postMessage({ type: 'arrival-opened' }, location.origin);
+  };
+  if (!document.body.classList.contains('is-loading')) return open();
+  const wait = setInterval(() => { if (!document.body.classList.contains('is-loading')) { clearInterval(wait); open(); } }, 200);
+});
+window.addEventListener('message', event => {
+  if (event.origin !== location.origin || event.source !== parent || event.data?.type !== 'arrival-visibility') return;
+  tourInView = event.data.visible; syncTourActivity();
 });

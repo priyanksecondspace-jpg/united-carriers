@@ -86,8 +86,22 @@ export class Stage {
     window.addEventListener('resize', this.resize);
     this.resize();
     this.t0 = performance.now();
-    const loop = () => { this.draw(); requestAnimationFrame(loop); };
-    requestAnimationFrame(loop);
+    this.active = true;
+    this.frame = null;
+    this.lastFrame = 0;
+    this.loop = (now) => {
+      if (!this.active) return;
+      if (now - this.lastFrame >= 1000 / 30) { this.draw(); this.lastFrame = now; }
+      this.frame = requestAnimationFrame(this.loop);
+    };
+    this.frame = requestAnimationFrame(this.loop);
+  }
+
+  setActive(active) {
+    if (this.active === active) return;
+    this.active = active;
+    if (active) this.frame = requestAnimationFrame(this.loop);
+    else { cancelAnimationFrame(this.frame); this.frame = null; }
   }
 
   makeSlot() {
@@ -111,7 +125,7 @@ export class Stage {
   // media: HTMLImageElement | HTMLVideoElement; focus in image coords (0..1 from top-left)
   set(slotIndex, media, focus = [0.5, 0.5]) {
     const s = this.slots[slotIndex];
-    s.src = media;
+    s.src = media; s.lastTime = -1;
     s.w = media.videoWidth || media.naturalWidth || 1;
     s.h = media.videoHeight || media.naturalHeight || 1;
     s.foc = [focus[0], 1 - focus[1]];
@@ -134,7 +148,8 @@ export class Stage {
     const isVideo = m instanceof HTMLVideoElement;
     if (isVideo) {
       if (m.readyState < 2) return;
-      if (!m.videoWidth) return;
+      if (!m.videoWidth || s.lastTime === m.currentTime) return;
+      s.lastTime = m.currentTime;
       s.w = m.videoWidth; s.h = m.videoHeight;
     } else if (!s.dirty) return;
     gl.bindTexture(gl.TEXTURE_2D, s.tex);

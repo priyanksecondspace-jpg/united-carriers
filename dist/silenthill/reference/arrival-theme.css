@@ -1,0 +1,27 @@
+/* Arrival palette for the reference residence pages: dusk navy, sky blue and lavender
+   in place of the reference site's greens, beige and olive. */
+:root, .ui-dark, .ui-light {
+  --c-dark-green: #0b1324;  --c-dark-green-rgb: 11,19,36;
+  --c-green: #1d3463;       --c-green-rgb: 29,52,99;
+  --c-light-green: #8f7fd0; --c-light-green-rgb: 143,127,208;
+  --c-olive: #4b62b0;       --c-olive-rgb: 75,98,176;
+  --c-light-blue: #4f86dc;  --c-light-blue-rgb: 79,134,220;
+  --c-beige: #e9ebf2;       --c-beige-rgb: 233,235,242;
+  --c-beige-background: #f3f4f8; --c-beige-background-rgb: 243,244,248;
+  --c-button-hover-gradient-light: linear-gradient(101.51deg, rgba(29,52,99,0) 37.02%, #1d3463 308.4%);
+  --c-button-hover-gradient-dark: linear-gradient(91.82deg, rgba(255,255,255,0) 20.31%, rgba(255,255,255,.15) 90.77%);
+}
+.flat__gradient div:nth-child(2) { opacity: .75; }
+.flat__gradient div:nth-child(3) { opacity: .6; }
+
+/* Inside the Arrival tour the parent page supplies the header. */
+html.in-arrival .header { display: none !important; }
+html.in-arrival .flat__content-inner { padding-top: 110px; }
+
+/* Request panel: Twin Towers photo instead of the reference's green WebGL gradient and spiral. */
+.l-callback__gradient canvas, .l-callback__spiral { display: none !important; }
+.l-callback__gradient {
+  background:
+    linear-gradient(0deg, rgba(2,2,2,.65) 0%, rgba(2,2,2,.15) 40%, rgba(2,2,2,0) 60%),
+    url("/silenthill/media/arrival/03.jpg") center / cover no-repeat !important;
+}

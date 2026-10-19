@@ -446,3 +446,45 @@ html:has(.thanks-page) { overflow: auto; height: auto; }
   .card { padding: 22px; border-radius: 24px; }
   .card .pill { white-space: normal; }
 }
+
+/* Arrival media tour and residence plan gallery */
+.rail { max-height: 65dvh; overflow-y: auto; scrollbar-width: none; gap: 0; }
+.rail::-webkit-scrollbar { display: none; width: 0; height: 0; }
+.rail button { flex-shrink: 0; }
+.dock .specs { display: none; }
+.dock .info-actions { border-top: 0; margin-top: 0; padding-top: 0; }
+.plan-select { display: block; width: 100%; margin: 12px 0 20px; padding: 14px; color: #24201b; background: #f5eee3; border: 1px solid #b7a58d; border-radius: 12px; font: inherit; }
+.residence-plan { display: block; width: 100%; height: min(52dvh, 600px); object-fit: contain; background: #fff; border-radius: 16px; padding: 16px; margin-bottom: 18px; }
+.plan-body a { text-decoration: underline; text-underline-offset: 4px; }
+.plan-body a { color: #f5eee3; }
+/* Visual floor search shares Arrival's navigation and glass treatments. */
+#visual-search { position: fixed; inset: 0; z-index: 19; background: #0b1324; }
+#visual-search[hidden] { display: none; }
+.tower-map, .tower-map > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tower-map image { filter: brightness(.72); }
+.tower-map [data-hoverable] { fill: transparent; stroke: transparent; cursor: pointer; outline: none; }
+.tower-map [data-hoverable]:hover, .tower-map [data-hoverable].selected, .tower-map [data-hoverable]:focus-visible { fill: #ead7a890; stroke: #eef2ff; stroke-width: 1; }
+.visual-heading { position: absolute; top: 22%; left: var(--pad); pointer-events: none; }
+.visual-heading h2 { font-family: var(--f-display); font-size: clamp(36px,4.6vw,80px); font-weight: 300; letter-spacing: -.04em; }
+.floor-card { position: absolute; right: var(--pad); bottom: 6%; width: 290px; padding: 26px; border-radius: 26px; }
+.floor-card label { font-size: 13px; }
+.floor-card .plan-select { padding: 10px; margin: 10px 0 16px; }
+#floor-types p { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #ffffff25; }
+.floor-number { display: flex; align-items: center; justify-content: space-between; margin: 22px 0; }
+.floor-number span { font-size: 11px; letter-spacing: .15em; }
+.floor-number strong { font-size: 70px; line-height: 1; font-weight: 300; }
+.visual-mode .rail, .visual-mode .dock, .visual-mode #scenes { visibility: hidden; }
+.nav-links button[aria-pressed="true"] { background: #ffffff24; }
+@media (max-width: 860px) {
+ .nav-links { display: flex; top: 76px; white-space: nowrap; }
+ .nav-links button { padding: 12px 14px; font-size: 13px; }
+ .visual-heading { top: 145px; }
+ .floor-card { bottom: 16px; right: 16px; width: 230px; padding: 16px; }
+ .floor-number { margin: 12px 0; }
+ .floor-number strong { font-size: 45px; }
+ #floor-types p { padding: 7px 0; font-size: 13px; }
+}
+.reference-search { display:block; width:100%; height:100%; border:0; background:#0b1324; }
+.visual-mode .nav { z-index:30; }
+.visual-mode .nav-links { background:rgba(11,19,36,.55); }
+.visual-mode .nav > .pill { background:rgba(11,19,36,.55); }

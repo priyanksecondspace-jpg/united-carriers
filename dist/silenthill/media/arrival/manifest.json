@@ -1,0 +1,142 @@
+{
+  "videos": [
+    {
+      "source": "01.mp4",
+      "scene": "Arrival"
+    },
+    {
+      "source": "02.mp4",
+      "scene": "Tower at Dusk"
+    },
+    {
+      "source": "03.mp4",
+      "scene": "Twin Towers"
+    },
+    {
+      "source": "04.mp4",
+      "scene": "Garden Approach"
+    },
+    {
+      "source": "05.mp4",
+      "scene": "The Arrival Court"
+    },
+    {
+      "source": "06.mp4",
+      "scene": "Above the City"
+    },
+    {
+      "source": "07 Entrance.mp4",
+      "scene": "Entrance"
+    },
+    {
+      "source": "08 Reception table.mp4",
+      "scene": "Reception"
+    },
+    {
+      "source": "09 Lounge Area.mp4",
+      "scene": "Lounge Area"
+    },
+    {
+      "source": "10 Common Dining area.mp4",
+      "scene": "Common Dining"
+    },
+    {
+      "source": "11 Yoga center.mp4",
+      "scene": "Yoga Centre"
+    },
+    {
+      "source": "12 Gym.mp4",
+      "scene": "Gym"
+    },
+    {
+      "source": "14 meeting hall.mp4",
+      "scene": "Meeting Hall"
+    },
+    {
+      "source": "15 swimming pool.mp4",
+      "scene": "Swimming Pool"
+    },
+    {
+      "source": "16 Living room.mp4",
+      "scene": "Living Room"
+    },
+    {
+      "source": "17 Kitchen.mp4",
+      "scene": "Kitchen"
+    },
+    {
+      "source": "18 family lounge.mp4",
+      "scene": "Family Lounge"
+    },
+    {
+      "source": "19 Sofa.mp4",
+      "scene": "The Sofa"
+    },
+    {
+      "source": "20 bedroom.mp4",
+      "scene": "Bedroom"
+    }
+  ],
+  "plans": [
+    {
+      "label": "Residence 66 \u00b7 61.6 m\u00b2 \u00b7 2 rooms",
+      "src": "media/arrival/plan-66.svg",
+      "source": "https://gatiworks.vercel.app/flat/66"
+    },
+    {
+      "label": "Residence 86 \u00b7 61.6 m\u00b2 \u00b7 2 rooms",
+      "src": "media/arrival/plan-86.svg",
+      "source": "https://gatiworks.vercel.app/flat/86"
+    },
+    {
+      "label": "Residence 87 \u00b7 62.1 m\u00b2 \u00b7 2 rooms",
+      "src": "media/arrival/plan-87.svg",
+      "source": "https://gatiworks.vercel.app/flat/87"
+    },
+    {
+      "label": "Residence 97 \u00b7 62.1 m\u00b2 \u00b7 2 rooms",
+      "src": "media/arrival/plan-97.svg",
+      "source": "https://gatiworks.vercel.app/flat/97"
+    },
+    {
+      "label": "Residence 136 \u00b7 61.6 m\u00b2 \u00b7 2 rooms",
+      "src": "media/arrival/plan-136.svg",
+      "source": "https://gatiworks.vercel.app/flat/136"
+    },
+    {
+      "label": "Residence 54 \u00b7 67 m\u00b2 \u00b7 2 rooms",
+      "src": "media/arrival/plan-54.svg",
+      "source": "https://gatiworks.vercel.app/flat/54"
+    },
+    {
+      "label": "Residence 137 \u00b7 62.1 m\u00b2 \u00b7 2 rooms",
+      "src": "media/arrival/plan-137.svg",
+      "source": "https://gatiworks.vercel.app/flat/137"
+    },
+    {
+      "label": "Residence 162 \u00b7 67.7 m\u00b2 \u00b7 2 rooms",
+      "src": "media/arrival/plan-162.svg",
+      "source": "https://gatiworks.vercel.app/flat/162"
+    },
+    {
+      "label": "Residence 164 \u00b7 66.8 m\u00b2 \u00b7 2 rooms",
+      "src": "media/arrival/plan-164.svg",
+      "source": "https://gatiworks.vercel.app/flat/164"
+    },
+    {
+      "label": "Residence 85 \u00b7 120 m\u00b2 \u00b7 3 rooms",
+      "src": "media/arrival/plan-85.svg",
+      "source": "https://gatiworks.vercel.app/flat/85"
+    },
+    {
+      "label": "Residence 95 \u00b7 120 m\u00b2 \u00b7 3 rooms",
+      "src": "media/arrival/plan-95.svg",
+      "source": "https://gatiworks.vercel.app/flat/95"
+    },
+    {
+      "label": "Residence 192 \u00b7 67.7 m\u00b2 \u00b7 2 rooms",
+      "src": "media/arrival/plan-192.svg",
+      "source": "https://gatiworks.vercel.app/flat/192"
+    }
+  ]
+}
