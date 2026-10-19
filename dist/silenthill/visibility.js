@@ -33,7 +33,7 @@ if (tourFrame) {
     if (event.origin !== location.origin || event.source !== tourFrame.contentWindow || event.data?.type !== 'arrival-explore') return;
     event.data.active ? lock() : unlock();
   });
-  new IntersectionObserver(entries => {visible=entries[0].isIntersecting;notify();},{threshold:0}).observe(tourFrame);
+  new IntersectionObserver(entries => {visible=entries[0].isIntersecting;document.documentElement.classList.toggle('tour-in-view',visible);notify();},{threshold:0}).observe(tourFrame);
   tourFrame.addEventListener('load',()=>{unlock();notify();});
   document.addEventListener('visibilitychange',notify);
 
