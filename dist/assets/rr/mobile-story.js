@@ -14,6 +14,10 @@
   const $ = (s, r = root) => r.querySelector(s);
   const $$ = (s, r = root) => [...r.querySelectorAll(s)];
 
+  // ---------- 0. Hero hand-off: the blue glow rises behind, then the screen fades to white ----------
+  const intro = $('.rr-ms-intro'), glow = $('.rr-ms-glow'), whiteout = $('.rr-ms-whiteout');
+  const groundIn = $('.rr-ms-ground-in');
+
   // ---------- 1. Drive-in: scrub every 6th frame of the desktop board sequence ----------
   const drive = $('.rr-ms-drive'), canvas = $('.rr-ms-canvas'), ctx = canvas.getContext('2d');
   const STEP = 6, LAST = 419, frames = [];
@@ -34,7 +38,7 @@
     // the car fills x 22-78% and y 72-100% of each frame: fit it to the width, wheels on the ground line
     const s = cw / (im.naturalWidth * 0.60), w = im.naturalWidth * s, h = im.naturalHeight * s;
     ctx.clearRect(0, 0, cw, ch);
-    ctx.drawImage(im, (cw - w) / 2, ch * 0.70 - h * 0.985, w, h);
+    ctx.drawImage(im, (cw - w) / 2, ch * 0.70 - h * 0.985, w, h); // ground line matches the parade below
   }
 
   // ---------- 2. Landmark parade: skyline and landmarks slide past the car ----------
@@ -56,9 +60,20 @@
   const bird = testi && testi.querySelector('.home-testi-plane-img');
 
   function update(now) {
+    // 0
+    const it = progress(intro);
+    if (it.on) {
+      loadFrames(); // start fetching the drive-in frames while the glow plays
+      glow.style.transform = `translate(-50%,${((1 - ease(seg(it.p, 0, 0.7))) * 100).toFixed(2)}%)`;
+      whiteout.style.opacity = seg(it.p, 0.6, 0.95).toFixed(3);
+    }
+
     // 1
     const d = progress(drive);
-    if (d.on) { loadFrames(); drawFrame(Math.round(d.p * (frames.length - 1))); }
+    if (d.on) {
+      loadFrames(); drawFrame(Math.round(d.p * (frames.length - 1)));
+      groundIn.style.transform = `translateY(${((1 - ease(seg(d.p, 0.8, 1))) * 100).toFixed(2)}%)`; // ground rises as the parade begins
+    }
 
     // 2
     const pr = progress(parade);
@@ -131,4 +146,8 @@
   raf = requestAnimationFrame(loop);
   document.addEventListener('visibilitychange', () => { cancelAnimationFrame(raf); if (!document.hidden) raf = requestAnimationFrame(loop); });
   window.addEventListener('resize', () => { current = -1; });
+
+  // Start the tour loading in the background so its loader is finished by the time you scroll to it.
+  const tour = document.querySelector('.rr-silent iframe');
+  if (tour) window.addEventListener('load', () => setTimeout(() => { tour.loading = 'eager'; }, 3000), { once: true });
 })();
