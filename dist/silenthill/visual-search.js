@@ -38,6 +38,8 @@ export async function initVisualSearch({ openModal, closeModal }) {
     sync();
   }
   document.querySelectorAll('[data-visual]').forEach(b => b.addEventListener('click', show));
+  // Phones are sent here from the homepage; /silenthill/index.html#visual-search opens the floor picker.
+  if (location.hash === '#visual-search' && parent === window) show();
   document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', hide));
   window.addEventListener('message', async event => {
     if (event.origin !== location.origin || event.source !== frame?.contentWindow) return;
