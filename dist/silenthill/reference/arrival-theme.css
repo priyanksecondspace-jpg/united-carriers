@@ -25,3 +25,11 @@ html.in-arrival .flat__content-inner { padding-top: 110px; }
     linear-gradient(0deg, rgba(2,2,2,.65) 0%, rgba(2,2,2,.15) 40%, rgba(2,2,2,0) 60%),
     url("/silenthill/media/arrival/03.jpg") center / cover no-repeat !important;
 }
+
+/* Phones: show the floor-plan modal full-screen instead of as a half-width side panel. */
+@media (max-width: 767px) {
+  html.with-floor-modal .modal--side-search .modal__content,
+  html.with-floor-modal .modal--side-search .floor-views-modal { width: 100% !important; max-width: none !important; left: 0 !important; margin-left: 0 !important; transform: none !important; }
+  html.with-floor-modal .modal--side-search .modal__close { position: fixed !important; top: 14rem !important; right: 1.6rem !important; left: auto !important; width: 4.4rem !important; height: 4.4rem !important; transform: none !important; z-index: 20; }
+}
+/* (the close button sits at 14rem because the tour's header covers the top of the screen) */
